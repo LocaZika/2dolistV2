@@ -1,25 +1,16 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import { useState } from "react";
+import Header from "./components/Header";
+import "./scss/app.scss";
+import "./scss/reset.scss";
+import ToDo from "./components/ToDo";
+import { ToastContainer } from "react-toastify";
+export default function App() {
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={isDarkTheme === false ? "app light" : "app dark"}>
+      <Header darkTheme={isDarkTheme} />
+      <ToDo darkTheme={isDarkTheme} setTheme={setIsDarkTheme} />
+      <ToastContainer />
     </div>
   );
 }
-
-export default App;

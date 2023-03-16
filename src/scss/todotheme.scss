@@ -1,0 +1,27 @@
+@import 'param';
+.todo-theme{
+  @include flex(space-between, center);
+  margin-bottom: 3.9rem;
+  h1{
+    @extend %d-inline;
+    font-size: 3.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.1rem;
+    color: #fff;
+    user-select: none;
+  }
+  button{
+    background: transparent no-repeat center center/cover;
+    outline: 0;
+    border: none;
+    width: 3.25rem;
+    height: 3.25rem;
+    &.light{
+      background-image: url(../../public/icons/icon-sun.svg);
+    }
+    &.dark{
+      background-image: url(../../public/icons/icon-moon.svg);
+    }
+  }
+}

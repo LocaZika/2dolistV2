@@ -1,0 +1,17 @@
+@import 'param';
+li{
+  button{
+    color: #9394a5;
+    background-color: transparent;
+  }
+  .task-control{
+    @include flex(space-between, center);
+    width: 35%;
+    button{
+      font-weight: 700;
+      &:focus{
+        color: #3a7bfd;
+      }
+    }
+  }
+}

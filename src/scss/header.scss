@@ -1,0 +1,14 @@
+@import 'param';
+header{
+  @extend %pos-abs;
+  top: 0;
+  left: 0;
+  background-color: #9742ff;
+  height: 30rem;
+  width: 100%;
+  .header-bg{
+    height: inherit;
+    background: no-repeat center center/cover;
+    transition: background-image 0.5s linear;
+  }
+}

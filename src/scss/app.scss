@@ -1,0 +1,15 @@
+@import 'param';
+#root, .app{
+  height: 100%;
+}
+.app{
+  @include flex(center, center);
+  @extend %pos-rel;
+  transition: background-color 0.5s linear;
+  &.light{
+    background-color: #fafafa;
+  }
+  &.dark{
+    background-color: #161722;
+  }
+}

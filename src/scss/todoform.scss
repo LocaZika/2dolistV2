@@ -1,0 +1,30 @@
+@import 'param';
+.app{
+  .todo-form{
+    padding: 1.95rem 3.25rem;
+    margin: 3rem 0;
+    border-radius: 0.5rem;
+    @include flex(null, center);
+    transition: background-color 0.5s linear;
+    button{
+      margin-right: 2.6rem;
+    }
+    input[type='text']{
+      font-weight: 400;
+      font-size: 2rem;
+      width: 80%;
+      background-color: transparent;
+      border: none;
+    }
+  }
+  &.light{
+    .todo-form{
+      background-color: #fafafa;
+    }
+  }
+  &.dark{
+    .todo-form {
+      background-color: #25273c;
+    }
+  }
+}
