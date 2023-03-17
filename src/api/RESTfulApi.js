@@ -1,6 +1,6 @@
-const url = "http://localhost:2207/";
+import { host } from "./config";
 const send = async (method, path, data) => {
-  const getData = await fetch(`${url}${path}`, {
+  const getData = await fetch(`${host}${path}`, {
     method,
     headers: {
       "Content-Type": "application/json",

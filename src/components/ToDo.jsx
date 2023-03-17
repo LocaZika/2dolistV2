@@ -3,29 +3,38 @@ import ToDoList from './ToDoList'
 import ToDoForm from './ToDoForm'
 import '../scss/todo.scss';
 import ToDoTheme from './ToDoTheme';
-import { ToastContainer, toast, Slide } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { get, post, update, remove } from '../api/RESTfulApi';
+
 
 export default function ToDo(props) {
   const [tasks, setTasks] = useState([]);
-  const getData = async() => await get('tasks').then(data => {
-    setTasks(data.data);
+  const [sortTasks, setSortTasks] = useState([]);
+  const getData = async() => await get('tasks').then(({data}) => {
+    setTasks(data);
+    setSortTasks(data);
   });
   useEffect(() => {
     getData();
-
   }, [])
   const handleAddTask = (taskName) => {
     if(taskName.trim() !== ''){
+      const taskSClone = [...tasks];
       const task = {
         name: taskName,
         isCompleted: false
       };
-      post('tasks', task);
-      setTasks([task, ...tasks]);
-      toast.success("Task is added successfully", {
-        icon: '🔥',
-      });
+      post('tasks', task).then(({res, data}) => {
+        if(res.ok === true) {
+          setTasks([data, ...taskSClone]);
+          setSortTasks([data, ...taskSClone]);
+          toast.success("Task is added successfully", {
+            icon: '🔥',
+          });
+        }else{
+          throw new Error();
+        }
+      })
     }else{
       toast.error("Please enter the content task", {
         icon: '😑',
@@ -56,8 +65,9 @@ export default function ToDo(props) {
       remove('tasks', taskId);
       tasksClone.splice(index, 1);
       setTasks([...tasksClone]);
+      setSortTasks([...tasksClone]);
       toast.info("Task is removed successfully",{
-        icon : "🌈",
+        icon : "😀",
       });
     } catch (e) {
       console.log(e);
@@ -68,10 +78,17 @@ export default function ToDo(props) {
     const inCompletedTasks = tasksClone.filter(task => task.isCompleted !== true);
     try {
       taskIds.forEach(taskId => remove('tasks', taskId));
-      setTasks([inCompletedTasks])
+      setTasks(inCompletedTasks);
+      setSortTasks(inCompletedTasks);
+      toast.success("Task is added successfully", {
+        icon: '🚀',
+      });
     } catch (e) {
       console.log(e);
     }
+  }
+  const handleSetSortTasks = (tasks) => {
+    setSortTasks(tasks);
   }
   return (
     <div className='todo'>
@@ -79,14 +96,11 @@ export default function ToDo(props) {
       <ToDoForm onAddTask={handleAddTask} />
       <ToDoList
         tasks={tasks}
+        sortTasks={sortTasks}
+        onSetSortTasks={handleSetSortTasks}
         onCompleteTask={handleCompleteTask}
         onRemoveTask={handleRemoveTask}
         onRemoveCompletedTask={handleRemoveCompletedTask}
-      />
-      <ToastContainer
-        autoClose={1000}
-        transition={Slide}
-        style={{fontSize: '1.4rem'}}
       />
     </div>
   )
